@@ -1075,7 +1075,7 @@
         animate(t) {
             let e = (t - this.lastUpdated) / g.settings.animationDelay;
             e = e < 0 ? 0 : e > 1 ? 1 : e;
-            e = 1 - Math.pow(1 - e, 3); // easeOut inline
+            e = 1 - Math.pow(1 - e, 6); // easeOut inline
         
             if (this.killedBy) {
                 this.targetX = this.killedBy.x;
