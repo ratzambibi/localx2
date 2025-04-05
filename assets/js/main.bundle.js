@@ -1074,18 +1074,27 @@
         }
         animate(t) {
             let e = (t - this.lastUpdated) / g.settings.animationDelay;
-            if (e = e < 0 ? 0 : e > 1 ? 1 : e,
-            this.killedBy && (this.targetX = this.killedBy.x,
-            this.targetY = this.killedBy.y),
-            this.x += (this.targetX - this.x) * e,
-            this.y += (this.targetY - this.y) * e,
-            this.size += (this.targetSize - this.size) * e,
-            this.globalAlpha = Math.min(Date.now() - this.born, 120) / 120,
-            this.isMarkedForRemoval)
-                return this.alphaOnRemoval = Math.max(120 - t + this.lastUpdated, 0) / 120,
-                void (0 === this.alphaOnRemoval && this.client.stores.cellsToRemove.remove(this));
-            this.lastUpdated = t
-        }
+            e = e < 0 ? 0 : e > 1 ? 1 : e;
+            e = 1 - Math.pow(1 - e, 3); // easeOut inline
+        
+            if (this.killedBy) {
+                this.targetX = this.killedBy.x;
+                this.targetY = this.killedBy.y;
+            }
+        
+            this.x += (this.targetX - this.x) * e;
+            this.y += (this.targetY - this.y) * e;
+            this.size += (this.targetSize - this.size) * e;
+            this.globalAlpha = Math.min(Date.now() - this.born, 120) / 120;
+        
+            if (this.isMarkedForRemoval) {
+                this.alphaOnRemoval = Math.max(120 - t + this.lastUpdated, 0) / 120;
+                if (this.alphaOnRemoval === 0) this.client.stores.cellsToRemove.remove(this);
+                return;
+            }
+        
+            this.lastUpdated = t;
+        }        
         destroy() {
             this.client.stores.cellsToRender.remove(this),
             this.client.stores.ownedIDs.remove(this.id),
