@@ -1073,10 +1073,10 @@
             this.targetSize = i
         }
         animate(t) {
-            t.cellSpeed = g.settings.cellSpeed / 10;
+            t.cellSpeed = Math.max(g.settings.cellSpeed / 10, 1);
             let e = (t - this.lastUpdated) / g.settings.animationDelay;
             e = e < 0 ? 0 : e > 1 ? 1 : e;
-            e = 1 - Math.pow(1 - e, t.cellSpeed); // easeOut inline
+            e = 1 - Math.pow(1 - e, cellSpeed); // easeOut inline
         
             if (this.killedBy) {
                 this.targetX = this.killedBy.x;
