@@ -1075,7 +1075,7 @@
         animate(t) {
             let e = (t - this.lastUpdated) / g.settings.animationDelay;
             e = e < 0 ? 0 : e > 1 ? 1 : e;
-            e = 1 - Math.pow(1 - e, g.settings.cellSpeed); // easeOut inline
+            e = 1 - Math.pow(1 - e, g.settings.cellSpeed / 100); // easeOut inline
         
             if (this.killedBy) {
                 this.targetX = this.killedBy.x;
@@ -2418,6 +2418,7 @@
             this.bindSlider("animationDelay", "animationDelay", "animationDelayValue"),
             this.bindSlider("cellTransparency", "cellTransparency", "cellTransparencyValue"),
             this.bindSlider("ringWidth", "ringWidth", "ringWidthValue"),
+            this.bindSlider("cellSpeed", "cellSpeed", "cellSpeedValue");
             this.bindToggleSwitch("showNicknames", "showNicknames"),
             this.bindToggleSwitch("showMass", "showMass"),
             this.bindToggleSwitch("showSkins", "showSkins"),
@@ -2429,7 +2430,6 @@
             this.bindToggleSwitch("multiboxAutoSwitchOnDeath", "multiboxAutoSwitchOnDeath")
             this.bindColorInput("MBColor1", "MBColor1")
             this.bindColorInput("MBColor2", "MBColor2");
-            this.bindTextInput("cellSpeed", "cellSpeed", "cellSpeedValue");
         }
         bindSlider(t, e, i) {
             const s = document.getElementById(e),
@@ -2448,17 +2448,6 @@
                 this.settings[t] = value;
                 n.textContent = value;
         
-                localStorage.setItem("ogarx:settings", JSON.stringify(this.settings));
-            });
-        }
-        bindTextInput(settingKey, inputId) {
-            const input = document.getElementById(inputId);
-            if (this.settings[settingKey]) {
-                input.value = this.settings[settingKey];
-            }
-            input.addEventListener("input", (event) => {
-                this.settings[settingKey] = value;
-                n.textContent = value
                 localStorage.setItem("ogarx:settings", JSON.stringify(this.settings));
             });
         }

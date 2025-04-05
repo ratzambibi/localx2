@@ -158,9 +158,9 @@
 
               <div class="option">
                 <label for="cellSpeed">Cell Speed:</label>
-                <input type="text" id="cellSpeed" value="0" oninput="updatecellSpeedValue(this.value)">
-                <span id="cellSpeedValue">10</span>
-              </div>              
+                <input type="range" id="cellSpeed" min="0" max="100" value="0" oninput="updateCellSpeedValue(this.value)">
+                <span id="CellSpeedValue">0</span>
+              </div>                  
 
                 <div class="option">
                   <span>Debug mode:</span>
