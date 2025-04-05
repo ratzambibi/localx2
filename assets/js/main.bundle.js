@@ -1075,7 +1075,7 @@
         animate(t) {
             let e = (t - this.lastUpdated) / g.settings.animationDelay;
             e = e < 0 ? 0 : e > 1 ? 1 : e;
-            e = 1 - Math.pow(1 - e, 6); // easeOut inline
+            e = 1 - Math.pow(1 - e, cellSpeed); // easeOut inline
         
             if (this.killedBy) {
                 this.targetX = this.killedBy.x;
@@ -2411,7 +2411,8 @@
                 multiboxAutoSwitchOnDeath: !0,
                 MBColor1: "#FFFFFF",
                 MBColor2: "#00B9E8",
-                ringWidth: 25
+                ringWidth: 25,
+                cellSpeed: 0
 
             },
             this.bindSlider("animationDelay", "animationDelay", "animationDelayValue"),
@@ -2428,6 +2429,7 @@
             this.bindToggleSwitch("multiboxAutoSwitchOnDeath", "multiboxAutoSwitchOnDeath")
             this.bindColorInput("MBColor1", "MBColor1")
             this.bindColorInput("MBColor2", "MBColor2");
+            this.bindTextInput("cellSpeed", "cellSpeed", "cellSpeedValue");
         }
         bindSlider(t, e, i) {
             const s = document.getElementById(e),
@@ -2446,6 +2448,17 @@
                 this.settings[t] = value;
                 n.textContent = value;
         
+                localStorage.setItem("ogarx:settings", JSON.stringify(this.settings));
+            });
+        }
+        bindTextInput(settingKey, inputId) {
+            const input = document.getElementById(inputId);
+            if (this.settings[settingKey]) {
+                input.value = this.settings[settingKey];
+            }
+            input.addEventListener("input", (event) => {
+                this.settings[settingKey] = value;
+                n.textContent = value
                 localStorage.setItem("ogarx:settings", JSON.stringify(this.settings));
             });
         }
